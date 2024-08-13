@@ -13,6 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let counter = 0;
         const size = carouselItems[0].clientWidth;
 
+        function updateArrows() {
+            const prevIndex = (counter - 1 + carouselItems.length) % carouselItems.length;
+            const nextIndex = (counter + 1) % carouselItems.length;
+
+            const prevImage = carouselItems[prevIndex].querySelector('img').src;
+            const nextImage = carouselItems[nextIndex].querySelector('img').src;
+
+            prevButton.querySelector('.arrow-image').style.backgroundImage = `url(${prevImage})`;
+            nextButton.querySelector('.arrow-image').style.backgroundImage = `url(${nextImage})`;
+        }
+
         function showItem(index) {
             if (index < 0) {
                 counter = carouselItems.length - 1;
@@ -22,9 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 counter = index;
             }
             carouselSlide.style.transform = `translateX(${-counter * size}px)`;
-            
-            // Add movement to background image
-            container.style.backgroundPosition = `${-counter * 20}px 0`;
+            container.style.backgroundPosition = `${-counter * 10}px 0`;
+            updateArrows();
         }
 
         prevButton.addEventListener('click', () => showItem(counter - 1));
