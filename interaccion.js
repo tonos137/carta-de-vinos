@@ -1,45 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const carousels = document.querySelectorAll('.carousel-container');
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let currentRegionIndex = 0;
+  const carousels = document.querySelectorAll('.carousel-container');
 
-    carousels.forEach((container, index) => {
-        const prevButton = container.querySelector('.prev');
-        const nextButton = container.querySelector('.next');
-        const carouselSlide = container.querySelector('.carousel-slide');
-        const carouselItems = container.querySelectorAll('.carousel-item');
+  carousels.forEach((container) => {
+    const slide = container.querySelector('.carousel-slide');
+    const items = container.querySelectorAll('.carousel-item');
+    const prevButton = container.querySelector('.prev');
+    const nextButton = container.querySelector('.next');
 
-        let counter = 0;
-        const size = carouselItems[0].clientWidth;
+    let current = 0;
 
-        function updateArrows() {
-            const prevIndex = (counter - 1 + carouselItems.length) % carouselItems.length;
-            const nextIndex = (counter + 1) % carouselItems.length;
+    function updateCarousel() {
+      const prev = (current - 1 + items.length) % items.length;
+      const next = (current + 1) % items.length;
 
-            const prevImage = carouselItems[prevIndex].querySelector('img').src;
-            const nextImage = carouselItems[nextIndex].querySelector('img').src;
-
-            prevButton.querySelector('.arrow-image').style.backgroundImage = `url(${prevImage})`;
-            nextButton.querySelector('.arrow-image').style.backgroundImage = `url(${nextImage})`;
+      items.forEach((item, index) => {
+        if (index === current) {
+          item.style.order = '2';
+        } else if (index === prev) {
+          item.style.order = '1';
+        } else if (index === next) {
+          item.style.order = '3';
+        } else {
+          item.style.order = '0';
         }
+      });
 
-        function showItem(index) {
-            if (index < 0) {
-                counter = carouselItems.length - 1;
-            } else if (index >= carouselItems.length) {
-                counter = 0;
-            } else {
-                counter = index;
-            }
-            carouselSlide.style.transform = `translateX(${-counter * size}px)`;
-            container.style.backgroundPosition = `${-counter * 10}px 0`;
-            updateArrows();
-        }
+      slide.style.transform = 'translateX(-100%)';
 
-        prevButton.addEventListener('click', () => showItem(counter - 1));
-        nextButton.addEventListener('click', () => showItem(counter + 1));
+      prevButton.innerHTML = `<img src="${items[prev].querySelector('img').src}" alt="Previous">`;
+      nextButton.innerHTML = `<img src="${items[next].querySelector('img').src}" alt="Next">`;
+    }
 
+    function moveToNext() {
+      current = (current + 1) % items.length;
+      updateCarousel();
+    }
+
+    function moveToPrev() {
+      current = (current - 1 + items.length) % items.length;
+      updateCarousel();
+    }
+
+    prevButton.addEventListener('click', moveToPrev);
+    nextButton.addEventListener('click', moveToNext);
+
+    updateCarousel();
+  });
+});
         container.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
         });
