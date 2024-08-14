@@ -24,8 +24,7 @@ h1, h2 {
 }
 
 .carousel-container {
-    max-width: 100%;
-    width: 100%;
+    width: 90%;
     position: relative;
     overflow: hidden;
     margin-bottom: 40px;
@@ -85,15 +84,16 @@ h1, h2 {
 }
 
 .wine-info {
-    position: relative;
+    position: absolute;
+    bottom: 0%;
     text-align: center;
     color: transparent;
     background: url('images/gold.png') repeat;
     background-clip: text;
     -webkit-background-clip: text;
-    padding: -20px;
+    padding: 20px;
     border-radius: 10px;
-    max-width: 80%;
+    width: 80%;
     margin-top: 20px;
 }
 
@@ -119,7 +119,7 @@ h1, h2 {
     cursor: pointer;
     z-index: 1;
     width: 100px;  
-    height: 200px;
+    height: 150px;
     overflow: shown;
 }
 
