@@ -77,11 +77,10 @@ h1, h2 {
     z-index: -1;
 }
 .carousel-slide img {
-    position: absolute;
-    top: 40%;
+    position: relative;
     max-width: 60%;
     max-height: 80%;
-    min-height: 70%;
+    padding: 0px;
     object-fit: contain;
 }
 
