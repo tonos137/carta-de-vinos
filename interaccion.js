@@ -1,44 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const carousels = document.querySelectorAll('.carousel-container');
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let currentRegionIndex = 0;
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.next');
+    const prevButton = document.querySelector('.prev');
+    const slideWidth = slides[0].getBoundingClientRect().width;
 
-    carousels.forEach((container, index) => {
-        const prevButton = container.querySelector('.prev');
-        const nextButton = container.querySelector('.next');
-        const carouselSlide = container.querySelector('.carousel-slide');
-        const carouselItems = container.querySelectorAll('.carousel-item');
+    // Arrange the slides next to one another
+    const setSlidePosition = (slide, index) => {
+        slide.style.left = slideWidth * index + 'px';
+    };
+    slides.forEach(setSlidePosition);
 
-        let counter = 0;
-        const size = carouselItems[0].clientWidth;
+    const moveToSlide = (track, currentSlide, targetSlide) => {
+        track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+        currentSlide.classList.remove('current-slide');
+        targetSlide.classList.add('current-slide');
+    };
 
-        function updateArrows() {
-            const prevIndex = (counter - 1 + carouselItems.length) % carouselItems.length;
-            const nextIndex = (counter + 1) % carouselItems.length;
+    // Next button
+    nextButton.addEventListener('click', e => {
+        const currentSlide = track.querySelector('.current-slide');
+        const nextSlide = currentSlide.nextElementSibling || slides[0];
+        moveToSlide(track, currentSlide, nextSlide);
+    });
 
-            const prevImage = carouselItems[prevIndex].querySelector('img').src;
-            const nextImage = carouselItems[nextIndex].querySelector('img').src;
-
-            prevButton.querySelector('.arrow-image').style.backgroundImage = `url(${prevImage})`;
-            nextButton.querySelector('.arrow-image').style.backgroundImage = `url(${nextImage})`;
-        }
-
-        function showItem(index) {
-            if (index < 0) {
-                counter = carouselItems.length - 1;
-            } else if (index >= carouselItems.length) {
-                counter = 0;
-            } else {
-                counter = index;
-            }
-            carouselSlide.style.transform = `translateX(${-counter * size}px)`;
-            container.style.backgroundPosition = `${-counter * 10}px 0`;
-            updateArrows();
-        }
-
-        prevButton.addEventListener('click', () => showItem(counter - 1));
-        nextButton.addEventListener('click', () => showItem(counter + 1));
+    // Prev button
+    prevButton.addEventListener('click', e => {
+        const currentSlide = track.querySelector('.current-slide');
+        const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1];
+        moveToSlide(track, currentSlide, prevSlide);
+    });
+});
 
         container.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
