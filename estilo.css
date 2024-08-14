@@ -15,8 +15,11 @@ body {
 }
 
 h1, h2 {
-    text-align: center;
-    color: gold;
+text-align: center;
+    color: transparent;
+    background: url('images/gold.png') repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .region-section {
@@ -35,7 +38,10 @@ h1, h2 {
     background-repeat: no-repeat;
     transition: background-position 0.5s ease-in-out;
 }
-
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
 .carousel-slide {
     display: flex;
     transition: transform 0.5s ease-in-out;
@@ -55,12 +61,8 @@ h1, h2 {
 
 .carousel-item h2 {
     position: relative;
-    text-align: center;
-    color: transparent;
-    background: url('images/gold.png') repeat;
-    background-clip: text;
-    -webkit-background-clip: text;
     padding: 20px;
+   transform: translateX(-50%);
     border-radius: 10px;
     max-width: 80%;
     margin-top: 20px;
@@ -77,23 +79,23 @@ h1, h2 {
     border-radius: 10px;
     z-index: -1;
 }
-.carousel-slide img {
-    max-width: 50%;
+.carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-height: 60%;
-    object-fit: contain;
+    max-width: 50%;
 }
 
 .wine-info {
     position: relative;
     text-align: center;
-    color: transparent;
-    background: url('images/gold.png') repeat;
-    background-clip: text;
-    -webkit-background-clip: text;
+    transform: translateX(-50%);
     padding: 20px;
     border-radius: 10px;
+    text-align: center;
     max-width: 80%;
-    margin-top: 20px;
 }
 
 .wine-info::before {
@@ -112,43 +114,20 @@ h1, h2 {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
     border: none;
-    padding: 0;
+    padding: 15px;
     cursor: pointer;
-    z-index: 1;
-    width: 100px;  /* Adjust as needed */
-    height: 150px;  /* Adjust as needed */
-    overflow: shown;
+    font-size: 24px;
 }
 
-.prev {
-    left: 10px;
-}
+.prev { left: 10px; }
+.next { right: 10px; }
 
-.next {
-    right: 10px;
-}
 
-.arrow-image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.3s ease-in-out;
-}
 
-.prev .arrow-image {
-    transform: scale(0.8) rotate(-10deg);
-}
 
-.next .arrow-image {
-    transform: scale(0.8) rotate(10deg);
-}
-
-.prev:hover .arrow-image, .next:hover .arrow-image {
-    transform: scale(1) rotate(0);
-}
 
 @media (max-width: 768px) {
     .carousel-slide img {
