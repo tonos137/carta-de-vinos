@@ -109,45 +109,30 @@ h1, h2 {
 }
 
 .prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    z-index: 1;
-    width: 100px;  /* Adjust as needed */
-    height: 150px;  /* Adjust as needed */
-    overflow: shown;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15%;
+  height: 60%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.prev {
-    left: 10px;
+.prev { left: 0; }
+.next { right: 0; }
+
+.prev img, .next img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
 }
 
-.next {
-    right: 10px;
-}
-
-.arrow-image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.3s ease-in-out;
-}
-
-.prev .arrow-image {
-    transform: scale(0.8) rotate(-10deg);
-}
-
-.next .arrow-image {
-    transform: scale(0.8) rotate(10deg);
-}
-
-.prev:hover .arrow-image, .next:hover .arrow-image {
-    transform: scale(1) rotate(0);
+.prev:hover img, .next:hover img {
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
