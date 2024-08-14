@@ -77,6 +77,8 @@ h1, h2 {
     z-index: -1;
 }
 .carousel-slide img {
+    position: absolute;
+    top: 40%;
     max-width: 60%;
     max-height: 80%;
     min-height: 70%;
@@ -84,8 +86,7 @@ h1, h2 {
 }
 
 .wine-info {
-    position: absolute;
-    bottom: 0%;
+    position: relative;
     text-align: center;
     color: transparent;
     background: url('images/gold.png') repeat;
@@ -93,7 +94,7 @@ h1, h2 {
     -webkit-background-clip: text;
     padding: 20px;
     border-radius: 10px;
-    width: 80%;
+    max-width: 80%;
     margin-top: 20px;
 }
 
