@@ -61,42 +61,40 @@ document.addEventListener('DOMContentLoaded', () => {
         showItem(counter);
     });
 
-    function showRegion(index) {
+function showRegion(index) {
         carousels.forEach((carousel, i) => {
-            carousel.style.display = i === index ? 'block' : 'none';
+            carousel.style.transform = `translateY(${(i - index) * 100}vh)`;
+            carousel.style.transition = 'transform 0.5s ease-in-out';
         });
     }
 
-    document.addEventListener('wheel', (e) => {
-        if (e.deltaY > 0 && currentRegionIndex < carousels.length - 1) {
+    function handleVerticalNavigation(direction) {
+        if (direction === 'down' && currentRegionIndex < carousels.length - 1) {
             currentRegionIndex++;
-        } else if (e.deltaY < 0 && currentRegionIndex > 0) {
-            currentRegionIndex--;
-        }
-        showRegion(currentRegionIndex);
-    });
-
-    let touchStartY = 0;
-    let touchEndY = 0;
-
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.changedTouches[0].screenY;
-    });
-
-    document.addEventListener('touchend', (e) => {
-        touchEndY = e.changedTouches[0].screenY;
-        handleVerticalSwipe();
-    });
-
-    function handleVerticalSwipe() {
-        if (touchStartY - touchEndY > 50 && currentRegionIndex < carousels.length - 1) {
-            currentRegionIndex++;
-        }
-        if (touchEndY - touchStartY > 50 && currentRegionIndex > 0) {
+        } else if (direction === 'up' && currentRegionIndex > 0) {
             currentRegionIndex--;
         }
         showRegion(currentRegionIndex);
     }
+
+
+    document.addEventListener('wheel', (e) => {
+        handleVerticalNavigation(e.deltaY > 0 ? 'down' : 'up');
+    });
+
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', (e) => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaY = touchStartY - touchEndY;
+        if (Math.abs(deltaY) > 50) {
+            handleVerticalNavigation(deltaY > 0 ? 'down' : 'up');
+        }
+    });
+
 
     showRegion(currentRegionIndex);
 });
