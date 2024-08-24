@@ -83,6 +83,7 @@ h1, h2 {
 }
 .carousel-slide img {
     position: relative;
+    min-height: 70%;
     max-width: 60%;
     max-height: 80%;
     padding: 0px;
